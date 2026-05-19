@@ -294,7 +294,7 @@
                 </div>
                 
                 <div class="bg-brand-gray rounded-3xl p-8 md:p-12 reveal-on-scroll" style="animation-delay: 0.2s">
-                    <form action="https://api.web3forms.com/submit" method="POST" id="contact-form" class="space-y-6">
+                    <form action="https://api.web3forms.com/submit" method="POST" id="contact-form" target="hidden-iframe" class="space-y-6">
                         <input type="hidden" name="access_key" value="3bfa233b-a198-450b-9706-87156b0e7900">
                         
                         <div class="grid grid-cols-2 gap-6">
@@ -423,51 +423,39 @@
         closeMenuBtn.addEventListener('click', toggleMenu);
         menuLinks.forEach(link => link.addEventListener('click', toggleMenu));
 
-        // Web3Forms AJAX Submission
+        // Web3Forms Submission via Iframe Trick (Bypasses CORS/AdBlocker constraints)
         const form = document.getElementById('contact-form');
         const successModal = document.getElementById('success-modal');
         const modalContent = document.getElementById('modal-content');
+        const iframe = document.getElementById('hidden-iframe');
+        let isSubmitted = false;
 
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
+        if (form && iframe) {
+            form.addEventListener('submit', function() {
+                isSubmitted = true;
                 const submitButton = form.querySelector('button[type="submit"]');
-                const originalText = submitButton.textContent;
                 submitButton.textContent = 'Sending...';
                 submitButton.disabled = true;
+            });
 
-                const formData = new FormData(form);
+            iframe.addEventListener('load', function() {
+                if (isSubmitted) {
+                    // Show success modal
+                    successModal.classList.remove('hidden');
+                    setTimeout(() => {
+                        modalContent.classList.remove('scale-95', 'opacity-0');
+                        modalContent.classList.add('scale-100', 'opacity-100');
+                    }, 50);
+                    
+                    // Reset form and status
+                    form.reset();
+                    isSubmitted = false;
 
-                fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json'
-                    },
-                    body: formData
-                })
-                .then(async (response) => {
-                    let json = await response.json();
-                    if (response.status == 200) {
-                        // Show modal with animation
-                        successModal.classList.remove('hidden');
-                        setTimeout(() => {
-                            modalContent.classList.remove('scale-95', 'opacity-0');
-                            modalContent.classList.add('scale-100', 'opacity-100');
-                        }, 50);
-                        form.reset();
-                    } else {
-                        alert(json.message || "Something went wrong. Please try again.");
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert("Form submission failed. Check your internet connection.");
-                })
-                .finally(() => {
-                    submitButton.textContent = originalText;
+                    // Reset button
+                    const submitButton = form.querySelector('button[type="submit"]');
+                    submitButton.textContent = 'Submit Inquiry';
                     submitButton.disabled = false;
-                });
+                }
             });
         }
 
@@ -479,6 +467,9 @@
             }, 300);
         };
     </script>
+
+    <!-- Hidden Iframe for silent form submission -->
+    <iframe name="hidden-iframe" id="hidden-iframe" style="display: none;"></iframe>
 
     <!-- Success Modal -->
     <div id="success-modal" class="fixed inset-0 z-[110] hidden bg-brand-dark/80 backdrop-blur-sm flex items-center justify-center p-6 transition-all duration-300">

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NAS DESIGN & CONSTRUCTION | Premium Architecture & Construction</title>
     <meta name="description" content="Modern architecture and construction firm in Chennai. Led by qualified professionals N. Abdul Hakeem and A. Roshan Sanofar.">
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <!-- Fonts: Syne & Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -293,20 +294,26 @@
                 </div>
                 
                 <div class="bg-brand-gray rounded-3xl p-8 md:p-12 reveal-on-scroll" style="animation-delay: 0.2s">
-                    <form class="space-y-6">
+                    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+                        <input type="hidden" name="access_key" value="3bfa233b-a198-450b-9706-87156b0e7900">
+                        
                         <div class="grid grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-xs uppercase tracking-widest font-bold text-gray-500 mb-2">Name</label>
-                                <input type="text" class="w-full bg-white border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-brand-cyan transition-all" placeholder="John Doe">
+                                <input type="text" name="Name" class="w-full bg-white border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-brand-cyan transition-all" placeholder="John Doe" required>
                             </div>
                             <div>
                                 <label class="block text-xs uppercase tracking-widest font-bold text-gray-500 mb-2">Number</label>
-                                <input type="tel" class="w-full bg-white border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-brand-cyan transition-all" placeholder="+91">
+                                <input type="tel" name="Phone" class="w-full bg-white border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-brand-cyan transition-all" placeholder="+91" required>
                             </div>
                         </div>
                         <div>
+                            <label class="block text-xs uppercase tracking-widest font-bold text-gray-500 mb-2">Email Address</label>
+                            <input type="email" name="Email" class="w-full bg-white border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-brand-cyan transition-all" placeholder="john@example.com" required>
+                        </div>
+                        <div>
                             <label class="block text-xs uppercase tracking-widest font-bold text-gray-500 mb-2">Inquiry Type</label>
-                            <select class="w-full bg-white border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-brand-cyan transition-all appearance-none">
+                            <select name="Inquiry Type" class="w-full bg-white border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-brand-cyan transition-all appearance-none" required>
                                 <option>Architectural Design</option>
                                 <option>Interior Design</option>
                                 <option>Construction</option>
@@ -315,10 +322,10 @@
                         </div>
                         <div>
                             <label class="block text-xs uppercase tracking-widest font-bold text-gray-500 mb-2">Message</label>
-                            <textarea rows="4" class="w-full bg-white border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-brand-cyan transition-all" placeholder="Tell us about your project..."></textarea>
+                            <textarea name="Message" rows="4" class="w-full bg-white border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-brand-cyan transition-all" placeholder="Tell us about your project..." required></textarea>
                         </div>
                         <button type="submit" class="w-full bg-brand-dark text-white py-5 rounded-xl font-bold uppercase tracking-widest hover:bg-brand-cyan transition-all shadow-lg transform hover:-translate-y-1">
-                            Send Inquiry
+                            Submit Inquiry
                         </button>
                     </form>
                 </div>
